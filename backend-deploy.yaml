@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: backend
+  name: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - image: dkrashi/go-to-do:backend-4.0
+          name: go-to-do
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: database_url
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: db_username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: db_password
+            - name: DB_NAME
+              value: "test"
+            - name: DB_COLLECTION_NAME
+              value: "todolist"
+          resources: {}
+status: {}
