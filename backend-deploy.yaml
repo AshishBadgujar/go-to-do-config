@@ -16,7 +16,7 @@ spec:
         app: backend
     spec:
       containers:
-        - image: dkrashi/go-to-do:backend-4.0
+        - image: dkrashi/go-to-do:backend-8.0
           name: go-to-do
           ports:
             - containerPort: 8080
